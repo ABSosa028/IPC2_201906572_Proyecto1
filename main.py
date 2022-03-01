@@ -65,7 +65,12 @@ class principal():
         #patron.LimpiarMat()
         patron_actual = Listado_Patrones.busqueda(codigo_patron)
         print('patron seleccionado:'+str(patron_actual.patron_mater))
-        patron.crear_mat(int(patron_actual.filas), int(patron_actual.columnas), patron_actual.patron_mater)
+        """ for d in range(0, len(patron_actual.patron_mater)):
+            posy = d//5
+            posx = d - (posy)
+            patron.incert_nodo(posy,posx,patron_actual.patron_mater[d])"""
+        patron.CrearMatriz(int(patron_actual.filas), int(patron_actual.columnas), patron_actual.patron_mater)
+        
         print('-----------')
         patron.MostrarMat()
         

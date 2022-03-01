@@ -1,19 +1,17 @@
 class Nodo_Cuadro_Piso():
 
-    def __init__(self, color):
-        self.color = color
-        self.left = None
-        self.down = None
-        self.up = None
-        self.right = None
-        
-
-    def setDato(self,dato):
-        self.dato = dato
-
-    def getDato(self):
-        return self.dato
+    def __init__ (self,color):
+        self.dato = color
+        self.siguiente = None
+        self.anterior = None
+        self.abajo = None
+        self.arriba = None
 
     def Mostrar(self):
-        print(str(self.color), end = "")
+        print(str(self.dato), end = "")
         
+    def getDato(self):
+        return self.dato
+    
+    def setDato(self,dato):
+        self.dato = dato
