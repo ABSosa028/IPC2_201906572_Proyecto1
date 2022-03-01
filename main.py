@@ -54,7 +54,7 @@ class principal():
             elif(op == '2'):
                 principal.cambiar_patron()
             else:
-                print(Fore.Red+'opcion no valida, intente de nuevo')
+                print(Fore.RED+'opcion no valida, intente de nuevo')
                 tt=False
             
 
@@ -62,12 +62,13 @@ class principal():
 
     def ver_patron(self,codigo_patron):
         global Listado_Patrones, patron
-        patron.LimpiarMat()
+        #patron.LimpiarMat()
         patron_actual = Listado_Patrones.busqueda(codigo_patron)
         print('patron seleccionado:'+str(patron_actual.patron_mater))
-        patron.creacion_matriz(int(patron_actual.filas), int(patron_actual.columnas), patron_actual.patron_mater)
+        patron.crear_mat(int(patron_actual.filas), int(patron_actual.columnas), patron_actual.patron_mater)
         print('-----------')
         patron.MostrarMat()
+        
 
         return
 

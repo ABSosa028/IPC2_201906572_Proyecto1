@@ -5,15 +5,10 @@ class Lista_Cuadro_Piso():
     
     def __init__(self):
         self.inicio = None
-
-    def eliminar_todo(self):
-        temp = self.cabecera
-        temp2 = self.cabecera
-        while temp or temp2:
-            temp = None
-            temp = temp.cuadro_derecha
-
-    def creacion_matriz(self,filas,columnas,Datos):
+    
+    #creo la matriz 
+#dddd
+    """def creacion_matriz(self,filas,columnas,Datos):
         q = s = None
         it = 0 
         for i in range(1, filas+1):
@@ -38,7 +33,7 @@ class Lista_Cuadro_Piso():
                     s = s.cuadro_derecha
             s = self.inicio
             while s.cuadro_abajo != None:
-                s = s.cuadro_abajo
+                s = s.cuadro_abajo"""
 
     def MostrarMat(self):
         if self.inicio != None:
@@ -47,8 +42,8 @@ class Lista_Cuadro_Piso():
                 auxi = aux
                 while auxi != None:
                     auxi.Mostrar()
-                    auxi = auxi.cuadro_derecha
-                aux = aux.cuadro_abajo
+                    auxi = auxi.right
+                aux = aux.down
                 print("")
 
     def LimpiarMat(self):
@@ -58,12 +53,44 @@ class Lista_Cuadro_Piso():
                 auxi = aux
                 while auxi != None:
                     aux2 = auxi
-                    auxi = auxi.cuadro_derecha
+                    auxi = auxi.right
                     aux2 = None    
                 aux3 = aux
-                aux = aux.cuadro_abajo
+                aux = aux.down
                 aux3 = None
                 print("")
+
+    def crear_mat(self, filas, columnas, Datos):
+        it_row = 0
+        it_column = 0
+        it_datos = 0
+        temp = self.inicio
+        
+        while(it_row < filas):
+            while(it_column <columnas):
+                nuevoNodo = dt(it_datos)
+                
+                temp = nuevoNodo
+                temp.right = None
+                temp.down = None
+                it_column +=1
+                it_datos +=1
+                temp = temp.right
+            it_row_temp = 0
+            it_row+=1
+            temp2 = self.inicio 
+            if(temp2 != None):
+                while  it_row != it_row_temp:
+                    temp2 = temp2.down
+                temp = temp2 
+                
+            
+                
+
+
+        
+        return 
+
 
 
     """def delet_mat(self,filas,columnas,Datos):
