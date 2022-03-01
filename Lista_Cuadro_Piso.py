@@ -40,6 +40,31 @@ class Lista_Cuadro_Piso():
             while s.cuadro_abajo != None:
                 s = s.cuadro_abajo
 
+    def MostrarMat(self):
+        if self.inicio != None:
+            aux = self.inicio
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    auxi.Mostrar()
+                    auxi = auxi.cuadro_derecha
+                aux = aux.cuadro_abajo
+                print("")
+
+    def LimpiarMat(self):
+        if self.inicio != None:
+            aux = self.inicio
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    aux2 = auxi
+                    auxi = auxi.cuadro_derecha
+                    aux2 = None    
+                aux3 = aux
+                aux = aux.cuadro_abajo
+                aux3 = None
+                print("")
+
 
     """def delet_mat(self,filas,columnas,Datos):
 
@@ -68,61 +93,5 @@ class Lista_Cuadro_Piso():
             s = self.inicio
             while s.cuadro_abajo != None:
                 s = s.cuadro_abajo"""
-            
-                    
-
-
-            
-    def insertar_nodo(self, color):
-        if self.cabecera == None:
-            self.cabecera = dt(color)
-
-
-    def insertar_siguienteAlb(self, color):
-        if  self.cabecera == None:
-            self.cabecera = dt(color)
-            #print(codigo, "lo añadimos a la cabeza")
-            return
-        else:
-            act = self.cabecera
-            bus = self.cabecera
-
-            existe = False
-            if(bus != None) :   
-                while bus != None:
-                    if bus.codigo == codigo:
-                        existe = True
-                    bus = bus.cuadro_derecha
-            if(existe==False):
-                nuevo_piso = dt(color)
-                nuevo_piso.cuadro_derecha = self.cabecera
-                self.cabecera.cuadro_derecha = nuevo_piso
-                self.cabecera = nuevo_piso
-                #print(codigo, "lo añadimos al final") 
-
-    def elminarUnAlbum(self, nombreAlbum):
-        act = self.cabecera
-        ant = None
-        while act and act.nombreAlbum == nombreAlbum:
-            ant = act
-            act = ant.siguiente
-        if ant is None:
-            self.cabecera = act.siguiente
-        elif act:
-            ant.siguiente = act.siguiente
-            act.siguiente = None
     
-    def insertarCancion(self,artista, album, nombre, imagen, ruta, vecesReproducidas):
-        bus = self.cabecera
-        if(bus != None) :   
-            while bus != None:
-                if bus.nombreAlbum == album:
-                    bus.canciones.insertar_siguienteCan(nombre,artista, album,imagen, ruta, vecesReproducidas)
-                bus = bus.siguiente
-    
-    def print_listas_de_rep(self):
-        temp = self.cabecera
-        while temp != None:
-            print(temp.nombreAlbum)
-            temp = temp.siguiente
 

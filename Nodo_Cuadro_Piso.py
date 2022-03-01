@@ -6,4 +6,13 @@ class Nodo_Cuadro_Piso():
         self.cuadro_arriba = None
         self.cuadro_derecha = None
         self.cuadro_abajo = None
+
+    def setDato(self,dato):
+        self.dato = dato
+
+    def getDato(self):
+        return self.dato
+
+    def Mostrar(self):
+        print(str(self.color), end = "")
         

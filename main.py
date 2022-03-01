@@ -11,13 +11,10 @@ from xml.dom import minidom
 
 
 Listado_Patrones = lista_patrones()
-patron = ''
+patron = lista_()
 dentro = True
 Filas = []
 class principal():
-    
-
-
 
     def menu(self):
         global dentro
@@ -34,42 +31,52 @@ class principal():
                 print('1.')
                 principal.lectura(self,'s')
             elif(op == '2'):
-                principal.ver_patron(self)
+                principal.menu_patron(self)
                 print('2.')
             elif(op == '3'):
                 dentro=False
             
-    def ver_patron(self):
+    def menu_patron(self):
         global patron
-        patron = ''
         Filas = [] 
         print('ingrese el codigo del patron que desea manipular: ')
         codigo = input('')
-        print(codigo)
-        if(patron == ''): 
-            patron = lista_(codigo)
-        else:
-            patron.eliminar_todo()
-            patron._nuevo_codigo(codigo)
-        finder = principal.bucar(self, codigo)
-        print(finder.patron_mater)
-        dimensiones = int(finder.columnas)*int(finder.filas)
-        #validando los espacios que coincidan con los cuadros
-        #if(int(finder.patron_mater(len))==dimensiones):
-        agg_fila = ''
-        for x in finder.patron_mater:
-            agg_fila += str(x)
-            
-            if (((len(agg_fila))%int(finder.columnas))==0):
-                Filas.append(agg_fila)
-                agg_fila = ''
-        for y in Filas:
-            print(y)
-
+        tt=False
+        while(tt==False):
+            print("        Menu Patron")
+            print('1. Ver el patron graficamente')
+            print('2. Cambiar el patron ')
+            print('seleccione una opcion')
+            print('')
+            op = input('')
+            if(op == '1'):
+                principal.ver_patron(self,codigo)
+            elif(op == '2'):
+                principal.cambiar_patron()
+            else:
+                print(Fore.Red+'opcion no valida, intente de nuevo')
+                tt=False
             
 
-        print('nel')
         return 'c'
+
+    def ver_patron(self,codigo_patron):
+        global Listado_Patrones, patron
+        patron.LimpiarMat()
+        patron_actual = Listado_Patrones.busqueda(codigo_patron)
+        print('patron seleccionado:'+str(patron_actual.patron_mater))
+        patron.creacion_matriz(int(patron_actual.filas), int(patron_actual.columnas), patron_actual.patron_mater)
+        print('-----------')
+        patron.MostrarMat()
+
+        return
+
+
+    def cambiar_patron(self):
+        return
+
+
+
 
     #digrafh{
     #   label = "\n struct ListNide";
@@ -157,6 +164,7 @@ class principal():
         columnas = nodo.columnas
         filas = nodo.filas
         patron  = nodo.patron_mater
+        
 
 
              
