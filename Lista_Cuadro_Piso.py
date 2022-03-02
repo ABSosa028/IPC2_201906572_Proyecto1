@@ -1,15 +1,13 @@
 from Nodo_Cuadro_Piso import Nodo_Cuadro_Piso as dt
-
+import sys,os
+from PIL import Image
 
 class Lista_Cuadro_Piso():
     
     def __init__(self):
-
         self.inicio = None
-    
-    #creo la matriz 
-#dddd
-
+        self.siguiente = None
+        self.anterior = None
 
     def CrearMatriz(self,n,m,Datos):
         q = None
@@ -41,7 +39,32 @@ class Lista_Cuadro_Piso():
             while s.abajo != None:
                 s = s.abajo
 
-    """def creacion_matriz(self,filas,columnas,Datos):
+    def MostrarMat(self):
+        if self.inicio != None:
+            aux = self.inicio
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    auxi.Mostrar()
+                    auxi = auxi.siguiente
+                aux = aux.abajo
+                print("")
+
+    def LimpiarMat(self):
+        if self.inicio != None:
+            aux = self.inicio
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    aux2 = auxi
+                    auxi = auxi.siguiente
+                    aux2 = None    
+                aux3 = aux
+                aux = aux.abajo
+                aux3 = None
+                print("")
+
+        """def creacion_matriz(self,filas,columnas,Datos):
         q = s = None
         it = 0 
         for i in range(1, filas+1):
@@ -68,31 +91,46 @@ class Lista_Cuadro_Piso():
             while s.cuadro_abajo != None:
                 s = s.cuadro_abajo"""
 
-    def MostrarMat(self):
-        if self.inicio != None:
-            aux = self.inicio
-            while aux != None:
-                auxi = aux
-                while auxi != None:
-                    auxi.Mostrar()
-                    auxi = auxi.siguiente
-                aux = aux.abajo
-                print("")
+    def imagen(self,nombre):
+        file = open("Reporte.dot","w")
+        file.write("digraph G {node [fontname=\"Arial\"];node_A [shape=record    label=\"")
 
-    def LimpiarMat(self):
-        if self.inicio != None:
-            aux = self.inicio
-            while aux != None:
-                auxi = aux
-                while auxi != None:
-                    aux2 = auxi
-                    auxi = auxi.right
-                    aux2 = None    
-                aux3 = aux
-                aux = aux.down
-                aux3 = None
-                print("")
+        p = self.inicio
+        i = 1
+        file.write("{"+str(nombre)+"|")
+        while p != None:
+            file.write(str(i))
+            i = i + 1
+            p = p.abajo
+            if p != None:
+                file.write("|")
+        file.write("}|")
 
+        aux = self.inicio
+        s = 1
+        while aux != None:
+            file.write("{"+str(s)+"|")
+            auxi = aux
+            while auxi != None:
+                file.write(auxi.getDato())
+                auxi = auxi.abajo
+                if auxi != None:
+                    file.write("|")
+            aux = aux.siguiente
+            file.write("}")
+            s = s + 1
+            if aux != None:
+                file.write("|")
+   
+        file.write("\"];} ")
+        file.close()
+        os.system("dot -Tpng Reporte.dot -o "+str(nombre)+".png")
+        im = Image.open(str(nombre)+".png")
+        im.show()
+
+
+
+"""
     def incert_nodo(self, fila, columna, dato):
         temp = self.inicio
         if(self.inicio == None):
@@ -113,14 +151,9 @@ class Lista_Cuadro_Piso():
                         it_column +=1
                 temp = temp.down
                 it_row += 1
-                    
-            
-
-
-
-
+    
+    
     def crear_mat(self, filas, columnas, Datos):
-        
         it_row = 0
         it_column = 0
         it_datos = 0
@@ -156,17 +189,10 @@ class Lista_Cuadro_Piso():
                         it_row_temp +=1
 
                     temp = temp2 
-                    
-            
-                
 
-
-        
         return 
 
-
-
-    """def delet_mat(self,filas,columnas,Datos):
+    def delet_mat(self,filas,columnas,Datos):
 
         q = s = None
         it = 0 

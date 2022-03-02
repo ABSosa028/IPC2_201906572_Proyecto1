@@ -19,13 +19,14 @@ class principal():
     def menu(self):
         global dentro
         while dentro==True:
-            print('menu')
-            print('1. Cargar Archivo')
-            print('2. Seleccionar Patron')
-            print('3. Salir')
-            print('4. op 1')
-            print('5. op 1')
-            op=input('Selecione una opcion')
+            print('-------------------------')
+            print('          Menu')
+            print('-------------------------')
+            print('1.  Cargar Archivo')
+            print('2.  Seleccionar Patron')
+            print('3.  Salir')
+            print('Selecione una opcion')
+            op=input()
             if(op == '1'):
                 #nitido
                 print('1.')
@@ -43,9 +44,12 @@ class principal():
         codigo = input('')
         tt=False
         while(tt==False):
-            print("        Menu Patron")
+            print('-------------------------------')
+            print("          Menu Patron")
+            print('-------------------------------')
             print('1. Ver el patron graficamente')
             print('2. Cambiar el patron ')
+            print('3. Seleccionar otro patron')
             print('seleccione una opcion')
             print('')
             op = input('')
@@ -53,46 +57,23 @@ class principal():
                 principal.ver_patron(self,codigo)
             elif(op == '2'):
                 principal.cambiar_patron()
+            elif(op == '3'):
+                patron.LimpiarMat()
+                principal.menu_patron(self)
             else:
                 print(Fore.RED+'opcion no valida, intente de nuevo')
                 tt=False
-            
-
         return 'c'
 
     def ver_patron(self,codigo_patron):
         global Listado_Patrones, patron
-        #patron.LimpiarMat()
         patron_actual = Listado_Patrones.busqueda(codigo_patron)
         print('patron seleccionado:'+str(patron_actual.patron_mater))
-        """ for d in range(0, len(patron_actual.patron_mater)):
-            posy = d//5
-            posx = d - (posy)
-            patron.incert_nodo(posy,posx,patron_actual.patron_mater[d])"""
         patron.CrearMatriz(int(patron_actual.filas), int(patron_actual.columnas), patron_actual.patron_mater)
-        
         print('-----------')
         patron.MostrarMat()
-        
-
+        patron.imagen(codigo_patron)
         return
-
-
-    def cambiar_patron(self):
-        return
-
-
-
-
-    #digrafh{
-    #   label = "\n struct ListNide";
-    #   node[shape]
-    # }
-    # )
-
-
-
-
 
     def select_file_XML(self):
     #filtros de extension de archivos
@@ -118,9 +99,7 @@ class principal():
         return filename
 
     def agg_patron(self,codigo, nombre_piso, filas, columnas, precio_volteo, precio_cambio, patron_mater):
-        
         Listado_Patrones.insertar_siguiente_patron(codigo, nombre_piso, filas, columnas, precio_volteo, precio_cambio, patron_mater)
-        #Listado_Patrones.insertar_siguiente_patron(codigo, nombre_piso, filas, columnas, precio_volteo, precio_cambio, patron_mater)
         return 'si'
 
     def lectura(self, nombre_archivo):
@@ -129,13 +108,11 @@ class principal():
         try:
             print('analizando  '+nombre_archivo)
             mydoc = minidom.parse(nombre_archivo)
-            #print(mydoc)
             Listas_Titulares = mydoc.getElementsByTagName("pisosArtesanales")
             for Lista in Listas_Titulares:
                 Lista_Pisos = (Lista.getElementsByTagName("piso"))
                 for Piso in Lista_Pisos:
                     nombre_piso = str (Piso.getAttribute("nombre"))
-                    #print(nombre_piso)
                     R_elementos = Piso.getElementsByTagName("R")
                     filas = int(R_elementos[0].childNodes[0].data)
                     C_elementos = Piso.getElementsByTagName("C")
@@ -149,16 +126,10 @@ class principal():
                     for Patron in Patrones:
                         codigo_patron = Patron.getAttribute("codigo")
                         patron= Patron.childNodes[0].data
-                        #print(codigo_patron)
-                        #print(patron)
-                        
                         self.agg_patron(self,codigo_patron, nombre_piso, filas, columnas, precio_volteo, precio_intercambio, patron)
-                        #agg_patron(codigo_patron,nombre_piso, filas, columnas, precio_volteo, precio_intercambio, patron)
             print('-------------------------------------------------')
-            #Listado_Patrones.print_lista_patrones()
             print('          Archivo Cargado Correctamente')
             print('-------------------------------------------------')
-            #self.menu(self)
         except ValueError:
              print(ValueError) #vista de errores al intentar leer archivos en consola
 
@@ -166,13 +137,7 @@ class principal():
         find = Listado_Patrones.busqueda(codigo)
         return find
 
-    def crear_pat(self, nodo):
-        columnas = nodo.columnas
-        filas = nodo.filas
-        patron  = nodo.patron_mater
-        
-
-
+    
              
 if __name__ == "__main__":
    principal.menu(principal)
