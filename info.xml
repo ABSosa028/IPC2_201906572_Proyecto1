@@ -20,7 +20,7 @@
         <patron codigo="cod22">WWWWBWWWB</patron>
     </patrones>
  </piso>
- <piso nombre="ejemplo03">
+ <piso nombre="ejemplo04">
     <R> 1 </R>
     <C> 5 </C>
     <F> 1000 </F>

@@ -6,8 +6,6 @@ class Lista_Cuadro_Piso():
     
     def __init__(self):
         self.inicio = None
-        self.siguiente = None
-        self.anterior = None
 
     def CrearMatriz(self,n,m,Datos):
         q = None
@@ -128,6 +126,22 @@ class Lista_Cuadro_Piso():
         im = Image.open(str(nombre)+".png")
         im.show()
 
+    def comparar(self,self2):
+        print('empieso')
+        if self.inicio != None and self2.inicio != None:
+            aux = self.inicio
+            aux2 = self2.inicio
+            print(aux.dato+aux2.dato)
+            while aux != None and aux2!=None:
+                auxi = aux
+                auxi2 = aux2
+                while auxi != None and auxi2!=None:
+                    print(auxi.dato == auxi2.dato)
+                    auxi = auxi.siguiente
+                    auxi2 = auxi2.siguiente
+                aux = aux.abajo
+                aux2 = aux2.abajo
+                print("")
 
 
 """

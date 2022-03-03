@@ -1,4 +1,6 @@
 import sys,pdb
+
+from django.forms import PasswordInput
 from Lista_Patrones import Lista_Patrones as lista_patrones
 from Lista_Cuadro_Piso import Lista_Cuadro_Piso as lista_
 
@@ -39,6 +41,7 @@ class principal():
             
     def menu_patron(self):
         global patron
+        patron = lista_()
         Filas = [] 
         print('ingrese el codigo del patron que desea manipular: ')
         codigo = input('')
@@ -56,9 +59,9 @@ class principal():
             if(op == '1'):
                 principal.ver_patron(self,codigo)
             elif(op == '2'):
-                principal.cambiar_patron()
+                principal.cambiar_patron(self,codigo)
             elif(op == '3'):
-                patron.LimpiarMat()
+                
                 principal.menu_patron(self)
             else:
                 print(Fore.RED+'opcion no valida, intente de nuevo')
@@ -74,6 +77,56 @@ class principal():
         patron.MostrarMat()
         patron.imagen(codigo_patron)
         return
+
+    def ver_patron2(self,codigo_patron):
+        patron2 = lista_()
+        patron_actual = Listado_Patrones.busqueda(codigo_patron)
+        print('patron seleccionado:'+str(patron_actual.patron_mater))
+        patron2.CrearMatriz(int(patron_actual.filas), int(patron_actual.columnas), patron_actual.patron_mater)
+        print('-----------')
+        patron2.MostrarMat()
+        patron2.imagen(codigo_patron)
+        return
+
+
+    def cambiar_patron(self, codigo_patron):
+        global Listado_Patrones, patron
+        patron_actual = Listado_Patrones.busqueda(codigo_patron)
+        print("Estos son los patrones a los cuales puede optar, escoja el patron que mas le convenza")
+        opciones = Listado_Patrones.busqueda2(patron_actual.nombre_piso)
+        it = 1
+        for op in opciones:
+            print(str(it)+'. codigo patron: ' + str(op.codigo)+' diseño del patron: '+op.patron_mater)
+            it+=1
+        print('Ingrese el numero del nuevo patron que desea')
+        print('*si desea ver el grafico del nuevo piso ingrese la opcion 689 seguido de un punto y el codigo del patron que desea ver')
+        opc = input()
+        print(opc)
+        input('nuevamente perro')
+        validar= opc.split(".")
+        if(validar[0]=='689'):
+            print('son dos op')
+            principal.ver_patron2(self,validar[1])
+            principal.cambiar_patron(self,codigo_patron)
+        else:
+            print(validar[0])
+            codNuev=opciones[int(validar[0])-1].codigo
+            principal.kambio(self,codNuev, codigo_patron)
+        return 
+
+    def kambio(self,codigo_nuevo, codigo_viejo):
+        print('arrheeee')
+        global Listado_Patrones, patron
+        print('viejo')
+        patron_nuevo = Listado_Patrones.busqueda(codigo_nuevo)
+        patron_viejo = Listado_Patrones.busqueda(codigo_viejo)
+        patron2 = lista_()
+        patron2.CrearMatriz(int(patron_nuevo.filas), int(patron_nuevo.columnas), patron_nuevo.patron_mater)
+        patron.comparar(patron2)
+    
+
+
+
 
     def select_file_XML(self):
     #filtros de extension de archivos

@@ -29,7 +29,7 @@ class Lista_Patrones:
                 self.cabecera = nuevaCancion
                 #print(nombre_piso, "lo añadimos al inicio") 
             else:
-                print(nombre_piso, "no lo añadimos, ya existe este codigo")
+                print(codigo, "no lo añadimos, ya existe este codigo")
         self.__circular    
 
     def __circular(self):
@@ -42,7 +42,7 @@ class Lista_Patrones:
         act = self.cabecera
         busqueda = None
         while act :
-            print(act.codigo)
+            #print(act.codigo)
             if(act.codigo != codigo_nodo):
                 act = act.siguiente
             else:
@@ -50,6 +50,19 @@ class Lista_Patrones:
                 return busqueda
         return busqueda
 
+    def busqueda2(self, nombrepiso):
+        act = self.cabecera
+        busqueda = None
+        Lista_resp = []
+        while act :
+            #print(act.codigo)
+            if(act.nombre_piso != nombrepiso):
+                act = act.siguiente
+            else:
+                busqueda = act
+                Lista_resp.append(act)
+                act = act.siguiente
+        return Lista_resp
 
     def elminar_patron(self, codigo_nodo):
         act = self.cabecera
