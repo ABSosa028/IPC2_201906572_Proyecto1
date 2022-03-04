@@ -128,6 +128,7 @@ class Lista_Cuadro_Piso():
 
     def comparar(self,self2):
         print('empieso')
+        comparacion = []
         if self.inicio != None and self2.inicio != None:
             aux = self.inicio
             aux2 = self2.inicio
@@ -136,12 +137,14 @@ class Lista_Cuadro_Piso():
                 auxi = aux
                 auxi2 = aux2
                 while auxi != None and auxi2!=None:
-                    print(auxi.dato == auxi2.dato)
+                    true = auxi.dato == auxi2.dato
+                    comparacion.append(true)
                     auxi = auxi.siguiente
                     auxi2 = auxi2.siguiente
                 aux = aux.abajo
                 aux2 = aux2.abajo
                 print("")
+        return comparacion
 
 
 """

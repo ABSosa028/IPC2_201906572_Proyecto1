@@ -52,14 +52,12 @@ class Lista_Patrones:
 
     def busqueda2(self, nombrepiso):
         act = self.cabecera
-        busqueda = None
         Lista_resp = []
         while act :
             #print(act.codigo)
             if(act.nombre_piso != nombrepiso):
                 act = act.siguiente
             else:
-                busqueda = act
                 Lista_resp.append(act)
                 act = act.siguiente
         return Lista_resp

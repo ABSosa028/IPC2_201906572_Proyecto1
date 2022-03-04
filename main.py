@@ -102,10 +102,8 @@ class principal():
         print('*si desea ver el grafico del nuevo piso ingrese la opcion 689 seguido de un punto y el codigo del patron que desea ver')
         opc = input()
         print(opc)
-        input('nuevamente perro')
         validar= opc.split(".")
         if(validar[0]=='689'):
-            print('son dos op')
             principal.ver_patron2(self,validar[1])
             principal.cambiar_patron(self,codigo_patron)
         else:
@@ -115,15 +113,16 @@ class principal():
         return 
 
     def kambio(self,codigo_nuevo, codigo_viejo):
-        print('arrheeee')
         global Listado_Patrones, patron
-        print('viejo')
         patron_nuevo = Listado_Patrones.busqueda(codigo_nuevo)
         patron_viejo = Listado_Patrones.busqueda(codigo_viejo)
         patron2 = lista_()
         patron2.CrearMatriz(int(patron_nuevo.filas), int(patron_nuevo.columnas), patron_nuevo.patron_mater)
-        patron.comparar(patron2)
-    
+        comparacion = []
+        for i in range(0, len(patron_nuevo.patron_mater)):
+            comparacion.append(patron_nuevo.patron_mater[i]==patron_viejo.patron_mater[i])
+            print(patron_nuevo.patron_mater[i]==patron_viejo.patron_mater[i])
+
 
 
 
