@@ -33,7 +33,7 @@ class principal():
             if(op == '1'):
                 #nitido
                 print('1.')
-                principal.lectura(self,'s')
+                principal.lectura(self,principal.select_file_XML(self))
             elif(op == '2'):
                 principal.menu_patron(self)
                 print('2.')
@@ -159,19 +159,26 @@ class principal():
         comparacion2 = patron.comparar(patron2)
         cambios_nec_w2 = patron2.cambios(patron)
         tt=0
-        if(int(patron_viejo.precio_volteo)<(int(patron_viejo.precio_cambio)/2)):
-            print("je")
-        else:
-            for i in range(0, len(comparacion2)):
-                if(comparacion2[i]==False):
-                    tt+=1
-                    if(tt==2):
-                        costotal = patron.costo(patron_nuevo.patron_mater, patron_viejo.precio_cambio)
-                        if(costotal<=(2*int(patron_viejo.precio_volteo))):
-                            instruccionesMuvs+= patron.nodos_intercambiar(patron_nuevo.patron_mater, patron_viejo.precio_cambio)
-                        else:
-                            patron.chageFirtTwo(patron_nuevo.patron_mater, patron_viejo.precio_volteo)
-                        tt=0
+        ptM = str(patron_nuevo.patron_mater)
+        prC = patron_viejo.precio_cambio
+        prV = patron_viejo.precio_volteo
+        for i in range(0, len(comparacion2)):
+            if(comparacion2[i]==False):
+                tt+=1
+                if(tt==1):
+                    x=i
+                if(tt==2):
+                    
+                    costotal=float(patron.costos(ptM, prC))
+                    if(costotal<=(2*int(patron_viejo.precio_volteo))):
+                        instruccionesMuvs+= patron.nodos_intercambiar(ptM, prC)
+                    else:
+                        patron.chageFirtTwo(ptM, prV)
+                        instruccionesMuvs+=("cambiar de color Nodo #"+str(x))
+                        instruccionesMuvs+="\n"
+                        instruccionesMuvs+=("cambiar de color Nodo #"+str(i))
+                        instruccionesMuvs+="\n"
+                    tt=0
         Costo_Logrado =int(patron.getCosto_Logrado())
         if(dtsType=='1'):
             print("           Pasos para conseguir el patron deseado \n ")
@@ -227,8 +234,6 @@ class principal():
         return 'si'
 
     def lectura(self, nombre_archivo):
-        print('hola')
-        nombre_archivo = 'info.xml'
         try:
             print('analizando  '+nombre_archivo)
             mydoc = minidom.parse(nombre_archivo)

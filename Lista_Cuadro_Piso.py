@@ -847,17 +847,18 @@ class Lista_Cuadro_Piso():
         im = Image.open(str(nombre)+"mod.png")
         im.show()
 
-    def costo(self, datos, csT):
+    def costos(self, datos, cs):
+         csT = int(cs)
          kontador = 0 
          pieza1 = -6
          f1=0 
-         f2=0
-         f=0
+         f2=0 
          c1=0
          c2=0
          pieza2 =-6
          
          if self.inicio != None:
+            f=0
             aux = self.inicio
             while aux != None:
                 auxi = aux
@@ -877,25 +878,25 @@ class Lista_Cuadro_Piso():
                                 f3=f1-f2-1
                                 f4=2*f3+1
                                 costo = csT*f4
-                                return(costo)
+                                return(str(costo))
                             #moviendo dos cosos en la misma columa de abajo para arriba
                             elif(f2>f1 and c2==c1):
                                 f3=f2-f1-1
                                 f4=2*f3+1
                                 costo = csT*f4
-                                return(costo)
+                                return(str(costo))
                             #moviendo dos cosos en la misma fila de derecha a izquierda
                             elif(f1==f2 and c2>c1):
                                 f3=c2-c1-1
                                 f4=2*f3+1
                                 costo=csT*f4
-                                return(costo)
+                                return(str(costo))
                             #moviendo dos cosos en la misma fila de izquierda a derecha
                             elif(f1==f2 and c2<c1):
                                 f3=c1-c2-1
                                 f4=2*f3+1
                                 costo = csT*f4
-                                return(costo)
+                                return(str(costo))
                             #moviendo un coso arriba izquierda y regresando el otro derecha abajo
                             elif(f2>f1 and c2>c1):
                                 ff = f2-f1-1
@@ -903,7 +904,7 @@ class Lista_Cuadro_Piso():
                                 f3 = ff+fff
                                 f4=2*f3+1
                                 costo = csT*f4
-                                return(costo)
+                                return(str(costo))
 
                             #moviendo un coso arriba derecha y regresando el otro izquierda abajo
                             elif(f2>f1 and c2<c1):
@@ -912,7 +913,7 @@ class Lista_Cuadro_Piso():
                                 f3 = ff+fff
                                 f4=2*f3+1
                                 costo = csT*f4
-                                return(costo)
+                                return(str(costo))
                             #moviendo un coso abajo derecha y regresando el otro izquierda arriba
                             elif(f2<f1 and c2<c1):
                                 ff =f1-f2-1
@@ -920,7 +921,7 @@ class Lista_Cuadro_Piso():
                                 f3 = ff+fff
                                 f4=2*f3+1
                                 costo = csT*f4
-                                return(costo)
+                                return(str(costo))
                             #moviendo un coso abajo izquierda y regresando el otro arriba derecha 
                             elif(f2<f1 and c2>c1):
                                 ff=f1-f2-1
@@ -928,12 +929,13 @@ class Lista_Cuadro_Piso():
                                 f3 = ff+fff
                                 f4=2*f3+1
                                 costo = csT*f4
-                                return(costo)
+                                return(str(costo))
                     auxi = auxi.siguiente
                     c +=1
                     kontador+=1
                 aux = aux.abajo
                 f+=1
+         return('')
 
     def chageFirtTwo(self,datos, csT):    
          kontador = 0 
@@ -948,16 +950,15 @@ class Lista_Cuadro_Piso():
                     if(auxi.getDato()!=datos[kontador] and pieza1==-6):
                         pieza1=kontador
                         auxi.setDato(datos[kontador])
-                        self.cambio_valor_nodo()
+                        self.cambio_valor_nodo(csT)
                     else:
                         if( pieza2==-6 and auxi.getDato()!=datos[kontador] and auxi.getDato()==datos[pieza1]):
                             auxi.setDato(datos[kontador])
                             pieza2=kontador
-                            self.cambio_valor_nodo()
+                            self.cambio_valor_nodo(csT)
                             return
                     auxi = auxi.siguiente
                     c +=1
                     kontador+=1
                 aux = aux.abajo
-                f+=1
                             
