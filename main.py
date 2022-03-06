@@ -117,11 +117,42 @@ class principal():
         patron_nuevo = Listado_Patrones.busqueda(codigo_nuevo)
         patron_viejo = Listado_Patrones.busqueda(codigo_viejo)
         patron2 = lista_()
+        patron.CrearMatriz(int(patron_viejo.filas), int(patron_viejo.columnas), patron_viejo.patron_mater)
         patron2.CrearMatriz(int(patron_nuevo.filas), int(patron_nuevo.columnas), patron_nuevo.patron_mater)
-        comparacion = []
-        for i in range(0, len(patron_nuevo.patron_mater)):
-            comparacion.append(patron_nuevo.patron_mater[i]==patron_viejo.patron_mater[i])
-            print(patron_nuevo.patron_mater[i]==patron_viejo.patron_mater[i])
+        print(patron_viejo.patron_mater)
+        
+        comparacion = patron.comparar(patron2)
+        cambios_nec_w = patron2.cambios(patron)
+
+        dif = 0
+        for i in comparacion:
+            if(i == False):
+                dif += 1
+        print('El patron seleccionado tiene '+str(dif)+' cuadros distintos en su patron')
+        print('Es necesario cambiar '+str(cambios_nec_w)+' de color negro')
+        for i in range(0, len(comparacion)):
+            if(comparacion[i]==False and cambios_nec_w!=0):
+                if(cambios_nec_w<0):
+                    to = patron.cambiando_a_blanco(i)
+                else:
+                    to = patron.cambiando_a_negro(i)
+                if(to ==True):
+                    if(cambios_nec_w>0):
+                        cambios_nec_w -= 1
+                    else:
+                        cambios_nec_w += 1
+            print(cambios_nec_w)
+        comparacion2 = patron.comparar(patron2)
+        cambios_nec_w2 = patron2.cambios(patron)
+        #for i in range(0, len(comparacion2)):
+        patron.MostrarMat()
+        patron.nodos_intercambiar(patron_nuevo.patron_mater)
+            
+            
+
+        print('reim')
+        patron.MostrarMat()
+                
 
 
 

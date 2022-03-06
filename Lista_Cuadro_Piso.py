@@ -62,33 +62,6 @@ class Lista_Cuadro_Piso():
                 aux3 = None
                 print("")
 
-        """def creacion_matriz(self,filas,columnas,Datos):
-        q = s = None
-        it = 0 
-        for i in range(1, filas+1):
-            for j in range(1, columnas+1):
-                NuevoNodo = dt(Datos[it])
-                it += 1
-                NuevoNodo.cuadro_derecha = None
-                NuevoNodo.cuadro_abajo = None
-                if j==1:
-                    NuevoNodo.cuadro_izquierda = None
-                    if self.inicio == None:
-                        self.inicio = NuevoNodo
-                    q = NuevoNodo
-                else:
-                    NuevoNodo.cuadro_izquierda = q
-                    q.cuadro_derecha = NuevoNodo
-                    q = NuevoNodo
-                if i == 1:
-                    NuevoNodo.cuadro_arriba = q
-                else:
-                    NuevoNodo.cuadro_arriba = s
-                    s = s.cuadro_derecha
-            s = self.inicio
-            while s.cuadro_abajo != None:
-                s = s.cuadro_abajo"""
-
     def imagen(self,nombre):
         file = open("Reporte.dot","w")
         file.write("digraph G {node [fontname=\"Arial\"];node_A [shape=record    label=\"")
@@ -127,8 +100,9 @@ class Lista_Cuadro_Piso():
         im.show()
 
     def comparar(self,self2):
-        print('empieso')
         comparacion = []
+        print(self.inicio)
+        print(self2.inicio)
         if self.inicio != None and self2.inicio != None:
             aux = self.inicio
             aux2 = self2.inicio
@@ -139,6 +113,7 @@ class Lista_Cuadro_Piso():
                 while auxi != None and auxi2!=None:
                     true = auxi.dato == auxi2.dato
                     comparacion.append(true)
+                    print(true)
                     auxi = auxi.siguiente
                     auxi2 = auxi2.siguiente
                 aux = aux.abajo
@@ -146,95 +121,391 @@ class Lista_Cuadro_Piso():
                 print("")
         return comparacion
 
+    def cambios(self,self2):
+        recW=0
+        recB=0
 
-"""
-    def incert_nodo(self, fila, columna, dato):
-        temp = self.inicio
-        if(self.inicio == None):
-            self.inicio = dt(dato)
-            temp = self.inicio
-            temp = temp.right
-        else:
-            temp = temp.right
-            it_row = 0
-            it_column = 0
-            while(it_row <=fila):
-                while(it_column <= columna):
-                    if(it_column ==columna and it_row ==fila):
-                        temp = dt(dato)
-                        
-                    else:
-                        temp = temp.right
-                        it_column +=1
-                temp = temp.down
-                it_row += 1
-    
-    
-    def crear_mat(self, filas, columnas, Datos):
-        it_row = 0
-        it_column = 0
-        it_datos = 0
-        temp = self.inicio
-        print()
-        while(it_row <filas):
+        if self.inicio != None and self2.inicio != None:
+            aux = self.inicio
+            aux2 = self2.inicio
+            while aux != None and aux2!=None:
+                auxi = aux
+                auxi2 = aux2
+                while auxi != None and auxi2!=None:
+                    if(auxi.dato=='W'):
+                        recW+=1
+                    if(auxi2.dato=='W'):
+                        recW-=1
+                    if(auxi.dato=='B'):
+                        recB+=1
+                    if(auxi2.dato=='B'):
+                        recB-=1
+
+                    auxi = auxi.siguiente
+                    auxi2 = auxi2.siguiente
+                aux = aux.abajo
+                aux2 = aux2.abajo
+                print("")
             
-            while(it_column < columnas):
-                if(it_datos<len(Datos)):
-                    nuevoNodo = dt(Datos[it_datos])
-                    print(Datos[it_datos])
-                    if(temp == None):
-                        temp = dt(Datos[it_datos])
-                        temp = self.inicio
-                    if(temp==None):
-                        temp = nuevoNodo
-                        temp.right = None
-                        temp.down = None
-                        it_column +=1
-                        it_datos +=1
-                        temp = temp.right
-                else:
-                    return
-                it_row_temp = 0
-                it_row+=1
-                temp2 = self.inicio 
-                print(self.inicio)
-                if(temp2 != None):
-                    print(self.inicio)
-                    while  it_row > it_row_temp:
-                        print(it_row, it_row_temp)
-                        temp2 = temp2.down
-                        it_row_temp +=1
+        return recB 
+        
+    def cambiando_a_blanco(self, num_nodo_cambiar):
+        contador = 0
+        if self.inicio != None:
+            aux = self.inicio
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    if(contador == num_nodo_cambiar):
+                        if(auxi.dato == 'B'):
+                            auxi.setDato('W')
+                            print('seteado2')
+                            return True
+                    auxi = auxi.siguiente
+                    contador+=1
+                aux = aux.abajo
+                print("")
+        return False
 
-                    temp = temp2 
+    def cambiando_a_negro(self, num_nodo_cambiar):
+        contador = 0
+        if self.inicio != None:
+            aux = self.inicio
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    if(contador == num_nodo_cambiar):
+                        if(auxi.dato == 'W'):
+                            auxi.setDato('B')
+                            print('seteado2')
+                            return True
+                    auxi = auxi.siguiente
+                    contador+=1
+                aux = aux.abajo
+                print("")
+        return False
+    
+    def intercambiando(self, num_nodo_cambiar1, num_nodo_cambiar2, difx,dify):
+        auxi = self.inicio
 
+    def mov_derecha(auxi):
+        if(auxi!=None):    
+            temp = auxi.siguiente
+            temp1a = auxi.anterior
+            temp1aa = auxi.abajo
+            temp1aaa = auxi.arriba
+            if(temp!=None):
+                tempa = temp.arriba
+                tempaa = temp.abajo
+                tempaaa = temp.siguiente
+            if(tempaaa!=None):
+                tempaaa.anterior = auxi
+            auxi.anterior = temp
+            auxi.abajo = tempaa
+            auxi.arriba = tempa
+            if(tempa!=None):
+                tempa.abajo = auxi
+            if(tempaa!=None):    
+                tempaa.arriba = auxi
+            if(temp!=None):                                        
+                temp.siguiente = auxi
+                temp.anterior = temp1a
+                temp.abajo = temp1aa
+                temp.arriba = temp1aaa
+            if(temp1a!=None):
+                temp1a.siguiente = temp
+            if(temp1aa!=None):    
+                temp1aa.arriba = temp
+            if(temp1aaa!=None):    
+                temp1aaa.abajo = temp
+            x+=1
+        return       
+
+    def mover_izquierda(auxi):
+        if(auxi!=None): 
+            temp = auxi.anterior
+            temp1a = auxi.siguiente
+            temp1aa = auxi.abajo
+            temp1aaa = auxi.arriba
+            if(temp!=None):
+                tempa = temp.arriba
+                tempaa = temp.abajo
+                tempaaa = temp.anterior
+            if(tempaaa!=None):
+                tempaaa.siguiente = auxi
+            auxi.anterior = tempaaa
+            auxi.abajo = tempaa
+            auxi.arriba = tempa
+            if(tempa!=None):
+                tempa.abajo = auxi
+            if(tempaa!=None):    
+                tempaa.arriba = auxi
+            if(temp!=None):                                        
+                temp.siguiente = temp1a
+                temp.anterior = auxi
+                temp.abajo = temp1aa
+                temp.arriba = temp1aaa
+            if(temp1a!=None):
+                temp1a.anterior = temp
+            if(temp1aa!=None):    
+                temp1aa.arriba = temp
+            if(temp1aaa!=None):    
+                temp1aaa.abajo = temp
+        return
+
+    def mover_abajo(auxi):
+        if(auxi!=None):
+            temp = auxi.abajo
+            temp1a = auxi.siguiente
+            temp1aa = auxi.anterior
+            temp1aaa = auxi.arriba
+            if(temp!=None):
+                tempa = temp.siguiente
+                tempaa = temp.abajo
+                tempaaa = temp.anterior
+                temp.abajo = auxi
+            auxi.anterior = tempaaa
+            auxi.abajo = tempaa
+            auxi.arriba = temp
+            auxi.siguiente = tempa
+            if(tempaa!=None):
+                tempaa.arriba = auxi
+            if(tempaaa!=None):
+                tempaaa.siguiente = auxi
+            if(tempa!=None):
+                tempa.anterior = auxi
+            if(temp!=None):
+                temp.siguiente = temp1a
+                temp.anterior = temp1aa
+                temp.abajo = auxi
+                temp.arriba = temp1aaa
+            if(temp1a!=None):
+                temp1a.anterior = temp
+            if(temp1aa!=None):
+                temp1aa.siguiente = temp
+            if(temp1aaa!=None):
+                temp1aaa.abajo = temp
+        return
+    
+    def mover_arriba(auxi):
+        if(auxi!= None):
+            temp = auxi.arriba
+            temp1a = auxi.siguiente
+            temp1aa = auxi.anterior
+            temp1aaa = auxi.abajo
+            if(temp!=None):#-------aki
+                tempa = temp.siguiente
+                tempaa = temp.arriba
+                tempaaa = temp.anterior
+                temp.arriba = auxi
+            auxi.anterior = tempaaa
+            auxi.abajo = temp
+            auxi.arriba = tempaa
+            auxi.siguiente = tempa
+            if(tempaa!=None):
+                tempaa.abajo = auxi
+            if(tempaaa!=None):
+                tempaaa.siguiente = auxi
+            if(tempa!=None):    
+                tempa.anterior = auxi
+            if(temp!=None):    
+                temp.siguiente = temp1a
+                temp.anterior = temp1aa
+                temp.abajo = temp1aaa
+                temp.arriba = auxi
+            if(temp1a!=None):    
+                temp1a.anterior = temp
+            if(temp1aa!=None):    
+                temp1aa.siguiente = temp
+            if(temp1aaa!=None):    
+                temp1aaa.arriba = temp
+            y-=1#here
+
+
+
+    def datToInterpolate(self, num_nodo_cambiar1, num_nodo_cambiar2,c1,c2,f1,f2):
+        print(num_nodo_cambiar1)
+        print(num_nodo_cambiar2)
+        cc1=c1
+        cc2=c2
+        
+        if(cc1!=cc2):
+            if self.inicio != None:
+                print('inicio')
+                aux = self.inicio
+                y=0
+                while aux != None:
+                    auxi = aux
+                    x=0
+                    while auxi != None:
+                        if(y==f1 or x==c1):
+                            if(x>c2):
+                                while(x!=c2):
+                                    print('que')
+                                    temp = auxi.anterior
+                                    temp1a = auxi.siguiente
+                                    temp1aa = auxi.abajo
+                                    temp1aaa = auxi.arriba
+                                    if(temp!=None):
+                                        tempa = temp.arriba
+                                        tempaa = temp.abajo
+                                        tempaaa = temp.anterior
+                                    if(tempaaa!=None):
+                                        tempaaa.siguiente = auxi
+                                    auxi.anterior = tempaaa
+                                    auxi.abajo = tempaa
+                                    auxi.arriba = tempa
+                                    if(tempa!=None):
+                                        tempa.abajo = auxi
+                                    if(tempaa!=None):    
+                                        tempaa.arriba = auxi
+                                    if(temp!=None):                                        
+                                        temp.siguiente = temp1a
+                                        temp.anterior = auxi
+                                        temp.abajo = temp1aa
+                                        temp.arriba = temp1aaa
+                                    if(temp1a!=None):
+                                        temp1a.anterior = temp
+                                    if(temp1aa!=None):    
+                                        temp1aa.arriba = temp
+                                    if(temp1aaa!=None):    
+                                        temp1aaa.abajo = temp
+                                    x-=1
+                                    #correccion de filas (pos y)
+                                if(y<f2):
+                                    while(y!=f2):
+                                        temp = auxi.abajo
+                                        temp1a = auxi.siguiente
+                                        temp1aa = auxi.anterior
+                                        temp1aaa = auxi.arriba
+                                        if(temp!=None):
+                                            tempa = temp.siguiente
+                                            tempaa = temp.abajo
+                                            tempaaa = temp.anterior
+                                            temp.abajo = auxi
+                                            auxi.anterior = tempaaa
+                                            auxi.abajo = tempaa
+                                            auxi.arriba = temp
+                                            auxi.siguiente = tempa
+                                            tempaa.arriba = auxi
+                                            tempaaa.siguiente = auxi
+                                            tempa.anterior = auxi
+                                        temp.siguiente = temp1a
+                                        temp.anterior = temp1aa
+                                        temp.abajo = auxi
+                                        temp.arriba = temp1aaa
+                                        temp1a.anterior = temp
+                                        temp1aa.siguiente = temp
+                                        temp1aaa.abajo = temp
+                                        y+=1
+                                if(y>f2):
+                                    while(y!=f2):
+                                        temp = auxi.arriba
+                                        temp1a = auxi.siguiente
+                                        temp1aa = auxi.anterior
+                                        temp1aaa = auxi.abajo
+                                        if(temp!=None):#-------aki
+                                            tempa = temp.siguiente
+                                            tempaa = temp.arriba
+                                            tempaaa = temp.anterior
+                                            temp.arriba = auxi
+                                        auxi.anterior = tempaaa
+                                        auxi.abajo = temp
+                                        auxi.arriba = tempaa
+                                        auxi.siguiente = tempa
+                                        tempaa.abajo = auxi
+                                        tempaaa.siguiente = auxi
+                                        tempa.anterior = auxi
+                                        temp.siguiente = temp1a
+                                        temp.anterior = temp1aa
+                                        temp.abajo = temp1aaa
+                                        temp.arriba = auxi
+                                        temp1a.anterior = temp
+                                        temp1aa.siguiente = temp
+                                        temp1aaa.arriba = temp
+                                        y-=1#here
+
+                                return
+                            else:
+                                while(x!=c2):
+                                    
+                                    print('qq')
+                                    if(x<c2):
+                                        temp = auxi.siguiente
+                                        temp1a = auxi.anterior
+                                        temp1aa = auxi.abajo
+                                        temp1aaa = auxi.arriba
+                                        if(temp!=None):
+                                            tempa = temp.arriba
+                                            tempaa = temp.abajo
+                                            tempaaa = temp.siguiente
+                                        if(tempaaa!=None):
+                                            tempaaa.anterior = auxi
+                                        auxi.anterior = temp
+                                        auxi.abajo = tempaa
+                                        auxi.arriba = tempa
+                                        if(tempa!=None):
+                                            tempa.abajo = auxi
+                                        if(tempaa!=None):    
+                                            tempaa.arriba = auxi
+                                        if(temp!=None):                                        
+                                            temp.siguiente = auxi
+                                            temp.anterior = temp1a
+                                            temp.abajo = temp1aa
+                                            temp.arriba = temp1aaa
+                                        if(temp1a!=None):
+                                            temp1a.siguiente = temp
+                                        if(temp1aa!=None):    
+                                            temp1aa.arriba = temp
+                                        if(temp1aaa!=None):    
+                                            temp1aaa.abajo = temp
+                                        x+=1
+                                return        
+                                        
+
+                        auxi = auxi.siguiente
+                        x+=1
+                    aux = aux.abajo
+                    y+=1
+                    print("")
+
+
+        
         return 
 
-    def delet_mat(self,filas,columnas,Datos):
-
-        q = s = None
-        it = 0 
-        for i in range(1, filas+1):
-            for j in range(1, columnas+1):
-                NuevoNodo = dt(Datos[it])
-                it += 1
-                NuevoNodo.cuadro_derecha = None
-                NuevoNodo.cuadro_abajo = None
-                if j==1:
-                    NuevoNodo.cuadro_izquierda = None
-                    if self.inicio == None:
-                        self.inicio = NuevoNodo
-                    q = NuevoNodo
-                else:
-                    NuevoNodo.cuadro_izquierda = q
-                    q.cuadro_derecha = NuevoNodo
-                    q = NuevoNodo
-                if i == 1:
-                    NuevoNodo.cuadro_arriba = q
-                else:
-                    NuevoNodo.cuadro_arriba = s
-                    s = s.cuadro_derecha
-            s = self.inicio
-            while s.cuadro_abajo != None:
-                s = s.cuadro_abajo"""
-    
+    def nodos_intercambiar(self, datos):
+         kontador = 0 
+         pieza1 = -6
+         f1=0 
+         f2=0
+         f=0
+         c1=0
+         c2=0
+         c=0
+         pieza2 =-6
+         if self.inicio != None:
+            aux = self.inicio
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    
+                    if(auxi.getDato()!=datos[kontador] and pieza1==-6):
+                        pieza1=kontador
+                        f1 = f
+                        c1 = c
+                    else:
+                        if( pieza2==-6 and auxi.getDato()!=datos[kontador] and auxi.getDato()==datos[pieza1]):
+                            pieza2=kontador
+                            f2 =f
+                            c2 =c
+                            print('dandole')
+                            self.datToInterpolate(pieza1,pieza2,c1,c2,f1,f2)
+                            return
+                    auxi = auxi.siguiente
+                    c +=1
+                    kontador+=1
+                aux = aux.abajo
+                f+=1
+                print("line")
+        
 

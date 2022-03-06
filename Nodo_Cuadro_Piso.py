@@ -11,6 +11,7 @@ class Nodo_Cuadro_Piso():
         print(str(self.dato), end = "")
         
     def getDato(self):
+
         return self.dato
     
     def setDato(self,dato):
