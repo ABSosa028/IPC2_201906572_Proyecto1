@@ -32,11 +32,18 @@ class Lista_Patrones:
                 print(codigo, "no lo añadimos, ya existe este codigo")
         self.__circular    
 
+    def toString(self):
+        act = self.cabecera
+        Lista = []
+        while act :
+            Lista.append(act.toString())
+            act = act.siguiente
+        return Lista
+
+
     def __circular(self):
         self.cabecera.anterior = self.ultimo
         self.ultimo.siguiente = self.cabecera
-
-    
 
     def busqueda(self, codigo_nodo):
         act = self.cabecera
@@ -90,5 +97,3 @@ class Lista_Patrones:
             temp = temp.siguiente
         else:
             print()
-            #print('jola')
-

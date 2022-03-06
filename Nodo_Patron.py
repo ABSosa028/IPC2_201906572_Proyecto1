@@ -10,3 +10,7 @@ class Nodo_Patron():
         self.patron_mater = patron_mater
         self.siguiente = None
         self.anterior = None
+    
+    def toString(self):
+        string = 'Piso: '+str(self.nombre_piso)+ ' patron: '+str(self.codigo)+' muestra: '+str(self.patron_mater)
+        return string

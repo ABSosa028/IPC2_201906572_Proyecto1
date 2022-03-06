@@ -26,7 +26,8 @@ class principal():
             print('-------------------------')
             print('1.  Cargar Archivo')
             print('2.  Seleccionar Patron')
-            print('3.  Salir')
+            print('3.  Pisos en orden alfabetico')
+            print('4.  Salir')
             print('Selecione una opcion')
             op=input()
             if(op == '1'):
@@ -37,6 +38,8 @@ class principal():
                 principal.menu_patron(self)
                 print('2.')
             elif(op == '3'):
+                principal.alfabeto()
+            elif(op == '4'):
                 dentro=False
             
     def menu_patron(self):
@@ -87,7 +90,6 @@ class principal():
         patron2.MostrarMat()
         patron2.imagen(codigo_patron)
         return
-
 
     def cambiar_patron(self, codigo_patron):
         global Listado_Patrones, patron
@@ -157,13 +159,19 @@ class principal():
         comparacion2 = patron.comparar(patron2)
         cambios_nec_w2 = patron2.cambios(patron)
         tt=0
-        
-        for i in range(0, len(comparacion2)):
-            if(comparacion2[i]==False):
-                tt+=1
-                if(tt==2):    
-                    instruccionesMuvs+= patron.nodos_intercambiar(patron_nuevo.patron_mater, patron_viejo.precio_cambio)
-                    tt=0
+        if(int(patron_viejo.precio_volteo)<(int(patron_viejo.precio_cambio)/2)):
+            print("je")
+        else:
+            for i in range(0, len(comparacion2)):
+                if(comparacion2[i]==False):
+                    tt+=1
+                    if(tt==2):
+                        costotal = patron.costo(patron_nuevo.patron_mater, patron_viejo.precio_cambio)
+                        if(costotal<=(2*int(patron_viejo.precio_volteo))):
+                            instruccionesMuvs+= patron.nodos_intercambiar(patron_nuevo.patron_mater, patron_viejo.precio_cambio)
+                        else:
+                            patron.chageFirtTwo(patron_nuevo.patron_mater, patron_viejo.precio_volteo)
+                        tt=0
         Costo_Logrado =int(patron.getCosto_Logrado())
         if(dtsType=='1'):
             print("           Pasos para conseguir el patron deseado \n ")
@@ -172,12 +180,11 @@ class principal():
             print('Los pasos son: \n')
             print(str(instruccionesMuvs))
             print('\n')
-            print('Costo Optimizado: '+Costo_Logrado)
+            print('Costo Optimizado: '+str(Costo_Logrado))
         else:
             principal.pasos_print(self,patron_nuevo, patron_viejo, instruccionesMuvs,Costo_Logrado)
         patron.MostrarMat()
         patron.imagen2(patron_viejo.codigo)                
-
 
     def pasos_print(self,pn, pv, iM,cL):
         file = open("Reporte_Pasos.txt","w")
@@ -190,10 +197,6 @@ class principal():
         file.write('Costo Optimizado: '+str(cL))
         file.close()
         os.open(flags=True,path='Reporte_Pasos.txt')
-        
-
-        
-
         return
 
     def select_file_XML(self):
@@ -257,8 +260,19 @@ class principal():
     def bucar(self, codigo):
         find = Listado_Patrones.busqueda(codigo)
         return find
-
-    
              
+    def alfabeto():
+        lista = Listado_Patrones.toString()
+        lista.sort()
+        print('================================================================')
+        for dato in lista:
+            print (dato)
+        print('================================================================')
+        return
+        
+
+
+
+
 if __name__ == "__main__":
    principal.menu(principal)
