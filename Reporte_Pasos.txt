@@ -1,0 +1,19 @@
+           Pasos para conseguir el patron deseado 
+ Cambiando patron: WBWBWWWB con codigo: cod11
+aaaa ---> patron: BWBWWWWW con codigo: cod12
+Los pasos son: 
+cambiar de color Nodo #1
+El Nodo de la fila: 0 y columna: 3 se movera: 
+Hacia la Izquierda 
+Hacia la Izquierda 
+Hacia la Izquierda 
+El Nodo de la fila: 0 y columna: 0 se movera: 
+Hacia la Derecha 
+Hacia la Derecha 
+El Nodo de la fila: 1 y columna: 3 se movera: 
+Hacia Arriba 
+Hacia la Izquierda 
+El Nodo de la fila: 0 y columna: 2 se movera: 
+Hacia Abajo
+
+Costo Optimizado: 9

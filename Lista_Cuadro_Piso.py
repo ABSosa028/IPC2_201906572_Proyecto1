@@ -2,10 +2,34 @@ from Nodo_Cuadro_Piso import Nodo_Cuadro_Piso as dt
 import sys,os
 from PIL import Image
 
+Costo_Logrado = 0
+
 class Lista_Cuadro_Piso():
-    
+
     def __init__(self):
         self.inicio = None
+        self.costo = 0
+
+    def setar0_Costo_logrado(self):
+        self.costo = 0
+
+    
+    def getCosto_Logrado(self):
+        return self.costo
+
+    def cambio_valor_nodo(self,c):
+        cos = self.costo
+        cos = int(cos)+int(c)
+        self.costo = cos
+        
+    
+    def cambio_pos_nodo(self,c):
+        cos = self.costo
+        cos = int(cos)+int(c)
+        self.costo = cos
+        
+    
+    
 
     def CrearMatriz(self,n,m,Datos):
         q = None
@@ -149,7 +173,7 @@ class Lista_Cuadro_Piso():
             
         return recB 
         
-    def cambiando_a_blanco(self, num_nodo_cambiar):
+    def cambiando_a_blanco(self, num_nodo_cambiar, csT):
         contador = 0
         if self.inicio != None:
             aux = self.inicio
@@ -159,7 +183,7 @@ class Lista_Cuadro_Piso():
                     if(contador == num_nodo_cambiar):
                         if(auxi.dato == 'B'):
                             auxi.setDato('W')
-                            print('seteado2')
+                            self.cambio_valor_nodo(csT)                            
                             return True
                     auxi = auxi.siguiente
                     contador+=1
@@ -167,7 +191,7 @@ class Lista_Cuadro_Piso():
                 print("")
         return False
 
-    def cambiando_a_negro(self, num_nodo_cambiar):
+    def cambiando_a_negro(self, num_nodo_cambiar, csT):
         contador = 0
         if self.inicio != None:
             aux = self.inicio
@@ -177,7 +201,7 @@ class Lista_Cuadro_Piso():
                     if(contador == num_nodo_cambiar):
                         if(auxi.dato == 'W'):
                             auxi.setDato('B')
-                            print('seteado2')
+                            self.cambio_valor_nodo(csT)                            
                             return True
                     auxi = auxi.siguiente
                     contador+=1
@@ -567,7 +591,7 @@ class Lista_Cuadro_Piso():
         
         return 
 
-    def nodos_intercambiar(self, datos):
+    def nodos_intercambiar(self, datos, csT):
          kontador = 0 
          pieza1 = -6
          f1=0 
@@ -601,30 +625,42 @@ class Lista_Cuadro_Piso():
                             print(f1)#0
                             print(f2)#0
                             print('--------')
-
+                            piezas2 = ('El Nodo de la fila: '+str(f2)+' y columna: '+str(c2)+' se movera: \n')
+                            piezas1 = ('El Nodo de la fila: '+str(f1)+' y columna: '+str(c1)+' se movera: \n')
                             if(f2<f1 and c2==c1):
                                 y=f2
                                 while(y<f1):
+                                    print()
                                     self.mover_abajo(auxi)
                                     y+=1
+                                    piezas2+=('Hacia Abajo \n')
+                                    self.cambio_pos_nodo(int(csT))
                                 temp = auxi.arriba
                                 y-=1
                                 while(y>f2):
                                     self.mover_arriba(temp)
                                     y-=1
-                                return
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia Arriba \n')
+                                piezas = piezas2+piezas1
+                                return piezas
                             #moviendo dos cosos en la misma columa de abajo para arriba
                             elif(f2>f1 and c2==c1):
                                 y=f2
                                 while(y>f1):
                                     self.mover_arriba(auxi)
                                     y-=1
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia Arriba \n')
                                 temp = auxi.abajo
                                 y+=1
                                 while(y<f2):
                                     self.mover_abajo(temp)
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia Abajo \n')
                                     y+=1
-                                return
+                                piezas = piezas2+piezas1
+                                return piezas
                             #moviendo dos cosos en la misma fila de derecha a izquierda
                             elif(f1==f2 and c2>c1):
                                 x=c2
@@ -633,100 +669,146 @@ class Lista_Cuadro_Piso():
                                     print('---')
                                     self.MostrarMat()
                                     x-=1
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia la Izquierda \n')
                                 temp = auxi.siguiente
                                 x+=1
                                 while(x<c2):
                                     self.mover_derecha(temp)
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia la Derecha \n')
                                     x+=1 
-                                return
+                                piezas = piezas2+piezas1
+                                return piezas
                             #moviendo dos cosos en la misma fila de izquierda a derecha
                             elif(f1==f2 and c2<c1):
                                 x=c2
                                 while(x<c1):
                                     self.mover_derecha(auxi)
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia la Derecha \n')
                                     x+=1
                                 temp = auxi.anterior
                                 x-=1
                                 while(x>c2):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia la Izquierda \n')
                                     self.mover_izquierda(temp)
                                     x-=1 
-                                return
+                                piezas = piezas2+piezas1
+                                return piezas
                             #moviendo un coso arriba izquierda y regresando el otro derecha abajo
                             elif(f2>f1 and c2>c1):
                                 y=f2
                                 x=c2
                                 while(y>f1):
                                     self.mover_arriba(auxi)
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia Arriba \n')
                                     y-=1
                                 while(x>c1):
                                     self.mover_izquierda(auxi)
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia la Izquierda \n')
                                     x-=1
                                 temp = auxi.siguiente
                                 x+=1
                                 while(x<c2):
                                     self.mover_derecha(temp)
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia la Derecha \n')
                                     x+=1
                                 while(y<f2):
                                     self.mover_abajo(temp)
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia Abajo\n')
                                     y+=1
-                                return
+                                piezas = piezas2+piezas1
+                                return piezas
                             #moviendo un coso arriba derecha y regresando el otro izquierda abajo
                             elif(f2>f1 and c2<c1):
                                 y=f2
                                 x=c2
                                 while(y>f1):
                                     self.mover_arriba(auxi)
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia Arriba \n')
                                     y-=1
                                 while(x<c1):
                                     self.mover_derecha(auxi)
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia la Derecha \n')
                                     x+=1
                                 temp = auxi.anterior
                                 x-=1
                                 while(x>c2):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia la Izquierda \n')
                                     self.mover_izquierda(temp)
                                     x-=1
                                 while(y<f2):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia Abajo \n')
                                     self.mover_abajo(temp)
                                     y+=1
-                                return
+                                piezas = piezas2+piezas1
+                                return piezas
                             #moviendo un coso abajo derecha y regresando el otro izquierda arriba
                             elif(f2<f1 and c2<c1):
                                 y=f2
                                 x=c2
                                 while(y<f1):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia Abajo \n')
                                     self.mover_abajo(auxi)
                                     y+=1
                                 while(x<c1):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia la Derecha \n')
                                     self.mover_derecha(auxi)
                                     x+=1
                                 temp = auxi.anterior
                                 x-=1
                                 while(x>c2):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia la Izquierda \n')
                                     self.mover_izquierda(temp)
                                     x-=1
                                 while(y>f2):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia Arriba \n')
                                     self.mover_arriba(temp)
                                     y-=1
-                                return
+                                piezas = piezas2+piezas1
+                                return piezas
                             #moviendo un coso abajo izquierda y regresando el otro arriba derecha 
                             elif(f2<f1 and c2>c1):
                                 x=c2
                                 y=f2
                                 while(y<f1):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia Abajo \n')
                                     self.mover_abajo(auxi)
                                     y+=1
                                 while(x>c1):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia la Izquierda \n')
                                     self.mover_izquierda(auxi)
                                     x-=1
                                 temp = auxi.siguiente
                                 x+=1
                                 while(x<c2):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas1+=('Hacia la Derecha \n')
                                     self.mover_derecha(temp)
                                     x+=1
                                 while(y>f2):
+                                    self.cambio_pos_nodo(int(csT))
+                                    piezas2+=('Hacia Arriba \n')
                                     self.mover_arriba(temp)
                                     y-=1
-                                return
+                                piezas = piezas2+piezas1
+                                return piezas
 
                                  
                                 

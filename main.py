@@ -1,4 +1,4 @@
-import sys,pdb
+import os,sys,pdb
 
 from django.forms import PasswordInput
 from Lista_Patrones import Lista_Patrones as lista_patrones
@@ -17,7 +17,7 @@ patron = lista_()
 dentro = True
 Filas = []
 class principal():
-
+     
     def menu(self):
         global dentro
         while dentro==True:
@@ -120,42 +120,81 @@ class principal():
         patron.CrearMatriz(int(patron_viejo.filas), int(patron_viejo.columnas), patron_viejo.patron_mater)
         patron2.CrearMatriz(int(patron_nuevo.filas), int(patron_nuevo.columnas), patron_nuevo.patron_mater)
         print(patron_viejo.patron_mater)
-        
+        patron.setar0_Costo_logrado()
         comparacion = patron.comparar(patron2)
         cambios_nec_w = patron2.cambios(patron)
 
+
+        print('----------------------------')
+        print('      Muestra de Pasos')
+        print('----------------------------')
+        print('1.  Verlos en Consola')
+        print('2.  Crear txt')
+        print('')
+        print('')
+        print('Seleccione una opcion:')
+        dtsType = input()
         dif = 0
         for i in comparacion:
             if(i == False):
                 dif += 1
+        instruccionesMuvs = ''
         print('El patron seleccionado tiene '+str(dif)+' cuadros distintos en su patron')
         print('Es necesario cambiar '+str(cambios_nec_w)+' de color negro')
         for i in range(0, len(comparacion)):
             if(comparacion[i]==False and cambios_nec_w!=0):
                 if(cambios_nec_w<0):
-                    to = patron.cambiando_a_blanco(i)
+                    to = patron.cambiando_a_blanco(i, patron_viejo.precio_volteo)
                 else:
-                    to = patron.cambiando_a_negro(i)
+                    to = patron.cambiando_a_negro(i, patron_viejo.precio_volteo)
                 if(to ==True):
                     if(cambios_nec_w>0):
                         cambios_nec_w -= 1
                     else:
                         cambios_nec_w += 1
+                    instruccionesMuvs+=("cambiar de color Nodo #"+str(i))
+                    instruccionesMuvs+="\n"
         comparacion2 = patron.comparar(patron2)
         cambios_nec_w2 = patron2.cambios(patron)
         tt=0
+        
         for i in range(0, len(comparacion2)):
             if(comparacion2[i]==False):
                 tt+=1
                 if(tt==2):    
-                    patron.nodos_intercambiar(patron_nuevo.patron_mater)
+                    instruccionesMuvs+= patron.nodos_intercambiar(patron_nuevo.patron_mater, patron_viejo.precio_cambio)
                     tt=0
+        Costo_Logrado =int(patron.getCosto_Logrado())
+        if(dtsType=='1'):
+            print("           Pasos para conseguir el patron deseado \n ")
+            print("Cambiando patron: "+patron_viejo.patron_mater+" con codigo: "+str(patron_viejo.codigo)+ '\n')
+            print("aaaa ---> patron: "+patron_nuevo.patron_mater+" con codigo: "+str(patron_nuevo.codigo)+ '\n')
+            print('Los pasos son: \n')
+            print(str(instruccionesMuvs))
+            print('\n')
+            print('Costo Optimizado: '+Costo_Logrado)
+        else:
+            principal.pasos_print(self,patron_nuevo, patron_viejo, instruccionesMuvs,Costo_Logrado)
         patron.MostrarMat()
         patron.imagen2(patron_viejo.codigo)                
 
 
+    def pasos_print(self,pn, pv, iM,cL):
+        file = open("Reporte_Pasos.txt","w")
+        file.write("           Pasos para conseguir el patron deseado \n ")
+        file.write("Cambiando patron: "+pv.patron_mater+" con codigo: "+str(pv.codigo)+ '\n')
+        file.write("aaaa ---> patron: "+pn.patron_mater+" con codigo: "+str(pn.codigo)+ '\n')
+        file.write('Los pasos son: \n')
+        file.write(str(iM))
+        file.write('\n')
+        file.write('Costo Optimizado: '+str(cL))
+        file.close()
+        os.open(flags=True,path='Reporte_Pasos.txt')
+        
 
+        
 
+        return
 
     def select_file_XML(self):
     #filtros de extension de archivos
