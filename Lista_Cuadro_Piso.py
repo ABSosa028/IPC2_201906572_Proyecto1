@@ -188,8 +188,8 @@ class Lista_Cuadro_Piso():
     def intercambiando(self, num_nodo_cambiar1, num_nodo_cambiar2, difx,dify):
         auxi = self.inicio
 
-    def mov_derecha(auxi):
-        if(auxi!=None):    
+    def mover_derecha(self,auxi):
+        if(auxi!=None and auxi!=self.inicio):    
             temp = auxi.siguiente
             temp1a = auxi.anterior
             temp1aa = auxi.abajo
@@ -203,6 +203,7 @@ class Lista_Cuadro_Piso():
             auxi.anterior = temp
             auxi.abajo = tempaa
             auxi.arriba = tempa
+            auxi.siguiente = tempaaa
             if(tempa!=None):
                 tempa.abajo = auxi
             if(tempaa!=None):    
@@ -218,11 +219,33 @@ class Lista_Cuadro_Piso():
                 temp1aa.arriba = temp
             if(temp1aaa!=None):    
                 temp1aaa.abajo = temp
-            x+=1
+        else:
+            init = self.inicio
+            auxi = init.siguiente
+            t = init.abajo
+            t2 = auxi.abajo
+            t3 = auxi.siguiente
+            init.siguiente = t3
+            init.abajo = t2
+            init.anterior = auxi
+            self.inicio = auxi
+            auxi.anterior = None
+            auxi.arriba = None
+            auxi.siguiente = init
+            auxi.abajo = t
+            if(t!=None):
+                t.arriba = self.inicio
+            if(t2!=None):
+                t2.arriba = init
+            if(t3!=None):
+                t3.anterior= init
+
         return       
 
-    def mover_izquierda(auxi):
-        if(auxi!=None): 
+    def mover_izquierda(self,aux):
+        init = self.inicio
+        auxi=aux
+        if(auxi!=None and auxi!=init.siguiente): 
             temp = auxi.anterior
             temp1a = auxi.siguiente
             temp1aa = auxi.abajo
@@ -231,30 +254,60 @@ class Lista_Cuadro_Piso():
                 tempa = temp.arriba
                 tempaa = temp.abajo
                 tempaaa = temp.anterior
+            else:
+                tempa = None
+                tempaa = None
+                tempaaa = None
+                #----
             if(tempaaa!=None):
                 tempaaa.siguiente = auxi
+            auxi.siguiente = temp
+            if(temp1a!=None):
+                temp1a.anterior = temp
             auxi.anterior = tempaaa
             auxi.abajo = tempaa
+            if(tempaa!=None):    
+                tempaa.arriba = auxi
             auxi.arriba = tempa
             if(tempa!=None):
                 tempa.abajo = auxi
-            if(tempaa!=None):    
-                tempaa.arriba = auxi
+            
             if(temp!=None):                                        
                 temp.siguiente = temp1a
                 temp.anterior = auxi
                 temp.abajo = temp1aa
                 temp.arriba = temp1aaa
-            if(temp1a!=None):
-                temp1a.anterior = temp
+            
             if(temp1aa!=None):    
                 temp1aa.arriba = temp
             if(temp1aaa!=None):    
                 temp1aaa.abajo = temp
+        else:
+            t = init.abajo
+            t2 = auxi.abajo
+            t3 = auxi.siguiente
+            init.siguiente = t3
+            init.abajo = t2
+            init.anterior = auxi
+            self.inicio = auxi
+            auxi.anterior = None
+            auxi.arriba = None
+            auxi.siguiente = init
+            auxi.abajo = t
+            if(t3!=None):
+                t3.anterior = init
+            if(t2!=None):
+                t2.arriba = init
+            if(t!=None):
+                t.arriba = auxi
+            
+
+            
+        
         return
 
-    def mover_abajo(auxi):
-        if(auxi!=None):
+    def mover_abajo(self,auxi):
+        if(auxi!=None and auxi!=self.inicio):
             temp = auxi.abajo
             temp1a = auxi.siguiente
             temp1aa = auxi.anterior
@@ -285,15 +338,36 @@ class Lista_Cuadro_Piso():
                 temp1aa.siguiente = temp
             if(temp1aaa!=None):
                 temp1aaa.abajo = temp
+        else:
+            init = self.inicio
+            auxi = init.abajo
+            t = init.siguiente
+            t2 = auxi.abajo
+            t3 = auxi.siguiente
+            init.siguiente = t3
+            init.abajo = t2
+            init.arriba = auxi
+            self.inicio = auxi
+            auxi.anterior = None
+            auxi.arriba = None
+            auxi.siguiente = t
+            auxi.abajo = init
+            if(t!=None):
+                t.anterior = self.inicio
+            if(t2!=None):
+                t2.arriba = init
+            if(t3!=None):
+                t3.anterior = init
+            
         return
     
-    def mover_arriba(auxi):
-        if(auxi!= None):
+    def mover_arriba(self,auxi):
+        if(auxi!= None and auxi.arriba!=self.inicio):
             temp = auxi.arriba
             temp1a = auxi.siguiente
             temp1aa = auxi.anterior
             temp1aaa = auxi.abajo
-            if(temp!=None):#-------aki
+            if(temp!=None):
                 tempa = temp.siguiente
                 tempaa = temp.arriba
                 tempaaa = temp.anterior
@@ -319,9 +393,29 @@ class Lista_Cuadro_Piso():
                 temp1aa.siguiente = temp
             if(temp1aaa!=None):    
                 temp1aaa.arriba = temp
-            y-=1#here
-
-
+        else:
+            init = self.inicio
+            auxi = init.abajo
+            t = init.siguiente
+            t2 = auxi.abajo
+            t3 = auxi.siguiente
+            init.siguiente = t3
+            init.abajo = t2
+            init.arriba = auxi
+            self.inicio = auxi
+            auxi.anterior = None
+            auxi.arriba = None
+            auxi.siguiente = t
+            auxi.abajo = init
+            if(t!=None):
+                t.anterior = self.inicio
+            if(t2!=None):
+                t2.arriba = init
+            if(t3!=None):
+                t3.anterior = init
+            
+            
+        return
 
     def datToInterpolate(self, num_nodo_cambiar1, num_nodo_cambiar2,c1,c2,f1,f2):
         print(num_nodo_cambiar1)
@@ -481,12 +575,13 @@ class Lista_Cuadro_Piso():
          f=0
          c1=0
          c2=0
-         c=0
+         
          pieza2 =-6
          if self.inicio != None:
             aux = self.inicio
             while aux != None:
                 auxi = aux
+                c=0
                 while auxi != None:
                     
                     if(auxi.getDato()!=datos[kontador] and pieza1==-6):
@@ -499,7 +594,157 @@ class Lista_Cuadro_Piso():
                             f2 =f
                             c2 =c
                             print('dandole')
-                            self.datToInterpolate(pieza1,pieza2,c1,c2,f1,f2)
+                            #moviendo dos cosos en la misma columna de arriba para abajo
+                            print('--------')
+                            print(c1)#0
+                            print(c2)#4
+                            print(f1)#0
+                            print(f2)#0
+                            print('--------')
+
+                            if(f2<f1 and c2==c1):
+                                y=f2
+                                while(y<f1):
+                                    self.mover_abajo(auxi)
+                                    y+=1
+                                temp = auxi.arriba
+                                y-=1
+                                while(y>f2):
+                                    self.mover_arriba(temp)
+                                    y-=1
+                                return
+                            #moviendo dos cosos en la misma columa de abajo para arriba
+                            elif(f2>f1 and c2==c1):
+                                y=f2
+                                while(y>f1):
+                                    self.mover_arriba(auxi)
+                                    y-=1
+                                temp = auxi.abajo
+                                y+=1
+                                while(y<f2):
+                                    self.mover_abajo(temp)
+                                    y+=1
+                                return
+                            #moviendo dos cosos en la misma fila de derecha a izquierda
+                            elif(f1==f2 and c2>c1):
+                                x=c2
+                                while(x>c1):
+                                    self.mover_izquierda(auxi)
+                                    print('---')
+                                    self.MostrarMat()
+                                    x-=1
+                                temp = auxi.siguiente
+                                x+=1
+                                while(x<c2):
+                                    self.mover_derecha(temp)
+                                    x+=1 
+                                return
+                            #moviendo dos cosos en la misma fila de izquierda a derecha
+                            elif(f1==f2 and c2<c1):
+                                x=c2
+                                while(x<c1):
+                                    self.mover_derecha(auxi)
+                                    x+=1
+                                temp = auxi.anterior
+                                x-=1
+                                while(x>c2):
+                                    self.mover_izquierda(temp)
+                                    x-=1 
+                                return
+                            #moviendo un coso arriba izquierda y regresando el otro derecha abajo
+                            elif(f2>f1 and c2>c1):
+                                y=f2
+                                x=c2
+                                while(y>f1):
+                                    self.mover_arriba(auxi)
+                                    y-=1
+                                while(x>c1):
+                                    self.mover_izquierda(auxi)
+                                    x-=1
+                                temp = auxi.siguiente
+                                x+=1
+                                while(x<c2):
+                                    self.mover_derecha(temp)
+                                    x+=1
+                                while(y<f2):
+                                    self.mover_abajo(temp)
+                                    y+=1
+                                return
+                            #moviendo un coso arriba derecha y regresando el otro izquierda abajo
+                            elif(f2>f1 and c2<c1):
+                                y=f2
+                                x=c2
+                                while(y>f1):
+                                    self.mover_arriba(auxi)
+                                    y-=1
+                                while(x<c1):
+                                    self.mover_derecha(auxi)
+                                    x+=1
+                                temp = auxi.anterior
+                                x-=1
+                                while(x>c2):
+                                    self.mover_izquierda(temp)
+                                    x-=1
+                                while(y<f2):
+                                    self.mover_abajo(temp)
+                                    y+=1
+                                return
+                            #moviendo un coso abajo derecha y regresando el otro izquierda arriba
+                            elif(f2<f1 and c2<c1):
+                                y=f2
+                                x=c2
+                                while(y<f1):
+                                    self.mover_abajo(auxi)
+                                    y+=1
+                                while(x<c1):
+                                    self.mover_derecha(auxi)
+                                    x+=1
+                                temp = auxi.anterior
+                                x-=1
+                                while(x>c2):
+                                    self.mover_izquierda(temp)
+                                    x-=1
+                                while(y>f2):
+                                    self.mover_arriba(temp)
+                                    y-=1
+                                return
+                            #moviendo un coso abajo izquierda y regresando el otro arriba derecha 
+                            elif(f2<f1 and c2>c1):
+                                x=c2
+                                y=f2
+                                while(y<f1):
+                                    self.mover_abajo(auxi)
+                                    y+=1
+                                while(x>c1):
+                                    self.mover_izquierda(auxi)
+                                    x-=1
+                                temp = auxi.siguiente
+                                x+=1
+                                while(x<c2):
+                                    self.mover_derecha(temp)
+                                    x+=1
+                                while(y>f2):
+                                    self.mover_arriba(temp)
+                                    y-=1
+                                return
+
+                                 
+                                
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+                            
+                               
                             return
                     auxi = auxi.siguiente
                     c +=1
@@ -508,4 +753,40 @@ class Lista_Cuadro_Piso():
                 f+=1
                 print("line")
         
+    def imagen2(self,nombre):
+        file = open("Reporte2.dot","w")
+        file.write("digraph G {node [fontname=\"Arial\"];node_A [shape=record    label=\"")
+
+        p = self.inicio
+        i = 1
+        file.write("{"+str(nombre)+" mod |")
+        while p != None:
+            file.write(str(i))
+            i = i + 1
+            p = p.abajo
+            if p != None:
+                file.write("|")
+        file.write("}|")
+
+        aux = self.inicio
+        s = 1
+        while aux != None:
+            file.write("{"+str(s)+"|")
+            auxi = aux
+            while auxi != None:
+                file.write(auxi.getDato())
+                auxi = auxi.abajo
+                if auxi != None:
+                    file.write("|")
+            aux = aux.siguiente
+            file.write("}")
+            s = s + 1
+            if aux != None:
+                file.write("|")
+   
+        file.write("\"];} ")
+        file.close()
+        os.system("dot -Tpng Reporte2.dot -o "+str(nombre)+"mod.png")
+        im = Image.open(str(nombre)+"mod.png")
+        im.show()
 

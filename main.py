@@ -141,18 +141,17 @@ class principal():
                         cambios_nec_w -= 1
                     else:
                         cambios_nec_w += 1
-            print(cambios_nec_w)
         comparacion2 = patron.comparar(patron2)
         cambios_nec_w2 = patron2.cambios(patron)
-        #for i in range(0, len(comparacion2)):
+        tt=0
+        for i in range(0, len(comparacion2)):
+            if(comparacion2[i]==False):
+                tt+=1
+                if(tt==2):    
+                    patron.nodos_intercambiar(patron_nuevo.patron_mater)
+                    tt=0
         patron.MostrarMat()
-        patron.nodos_intercambiar(patron_nuevo.patron_mater)
-            
-            
-
-        print('reim')
-        patron.MostrarMat()
-                
+        patron.imagen2(patron_viejo.codigo)                
 
 
 
