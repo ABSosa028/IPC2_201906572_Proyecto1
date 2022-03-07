@@ -40,7 +40,6 @@ class Lista_Patrones:
             act = act.siguiente
         return Lista
 
-
     def __circular(self):
         self.cabecera.anterior = self.ultimo
         self.ultimo.siguiente = self.cabecera
